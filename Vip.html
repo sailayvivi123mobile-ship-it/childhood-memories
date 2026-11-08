@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>CHILDHOOD MEMORIES VIP</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ min-height:100vh;
+ background:radial-gradient(ellipse at top,#302316,#090909 70%);
+ color:white;
+ font-family:Arial,sans-serif;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ padding:25px;
+}
+.container{
+ width:100%;
+ max-width:430px;
+ text-align:center;
+}
+h1{
+ color:#e5bd70;
+ font-size:27px;
+ letter-spacing:2px;
+}
+.subtitle{
+ color:#b9a47c;
+ letter-spacing:5px;
+ font-size:11px;
+ margin-bottom:30px;
+}
+.poster{
+ height:170px;
+ border:1px solid #806332;
+ border-radius:16px;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ font-size:75px;
+ background:linear-gradient(135deg,#392b19,#101010);
+ margin-bottom:25px;
+}
+.coming{
+ padding:22px;
+ background:#17130e;
+ border:1px solid #70552d;
+ border-radius:13px;
+ margin-bottom:15px;
+}
+.coming h2{
+ color:#e5bd70;
+ letter-spacing:3px;
+ font-size:19px;
+}
+.coming p{
+ color:#aaa;
+ font-size:12px;
+}
+.button{
+ display:block;
+ padding:19px;
+ margin:13px 0;
+ border-radius:13px;
+ text-decoration:none;
+ font-weight:bold;
+ letter-spacing:2px;
+}
+.vip{
+ background:linear-gradient(110deg,#8c672e,#e5bd70);
+ color:#111;
+}
+.more{
+ background:#191919;
+ color:#e5bd70;
+ border:1px solid #806332;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>CHILDHOOD MEMORIES</h1>
+<div class="subtitle">VIP PREMIUM</div>
+
+<div class="poster">🎞️</div>
+
+<div class="coming">
+<h2>COMING SOON</h2>
+<p>PREMIUM CONTENT IS COMING SOON</p>
+</div>
+
+<a class="button vip" id="vip" href="#">
+♛ VIP JOIN
+</a>
+
+<a class="button more" id="more" href="#">
+▦ MORE
+</a>
+
+</div>
+
+<script>
+// ကိုယ်ကြိုက်တဲ့ Link တွေ ဒီမှာပြောင်းပါ
+const VIP_LINK = "https://t.me/";
+const MORE_LINK = "https://t.me/";
+
+document.getElementById("vip").href = VIP_LINK;
+document.getElementById("more").href = MORE_LINK;
+</script>
+
+</body>
+</html>
