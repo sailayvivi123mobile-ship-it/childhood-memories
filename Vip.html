@@ -4,117 +4,365 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090909">
-<title>CHILDHOOD MEMORIES VIP</title>
-
+<meta name="theme-color" content="#080808">
+<title>VYNX CINEMA</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
+:root{--gold:#d8ad62;--bg:#080808;--panel:#151515}
 *{box-sizing:border-box}
-body{
- margin:0;
- min-height:100vh;
- background:radial-gradient(ellipse at top,#302316,#090909 70%);
- color:white;
- font-family:Arial,sans-serif;
- display:flex;
- justify-content:center;
- align-items:center;
- padding:25px;
-}
-.container{
- width:100%;
- max-width:430px;
- text-align:center;
-}
-h1{
- color:#e5bd70;
- font-size:27px;
- letter-spacing:2px;
-}
-.subtitle{
- color:#b9a47c;
- letter-spacing:5px;
- font-size:11px;
- margin-bottom:30px;
-}
-.poster{
- height:170px;
- border:1px solid #806332;
- border-radius:16px;
- display:flex;
- justify-content:center;
- align-items:center;
- font-size:75px;
- background:linear-gradient(135deg,#392b19,#101010);
- margin-bottom:25px;
-}
-.coming{
- padding:22px;
- background:#17130e;
- border:1px solid #70552d;
- border-radius:13px;
- margin-bottom:15px;
-}
-.coming h2{
- color:#e5bd70;
- letter-spacing:3px;
- font-size:19px;
-}
-.coming p{
- color:#aaa;
- font-size:12px;
-}
-.button{
- display:block;
- padding:19px;
- margin:13px 0;
- border-radius:13px;
- text-decoration:none;
- font-weight:bold;
- letter-spacing:2px;
-}
-.vip{
- background:linear-gradient(110deg,#8c672e,#e5bd70);
- color:#111;
-}
-.more{
- background:#191919;
- color:#e5bd70;
- border:1px solid #806332;
-}
+body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#090909ed;border-bottom:1px solid #302515;padding:17px 15px;text-align:center}
+.brand{font-size:24px;letter-spacing:4px;color:var(--gold);font-weight:800}
+.sub{font-size:9px;letter-spacing:4px;color:#a78b5d;margin-top:5px}
+main{max-width:1050px;margin:auto;padding:18px 15px 50px}
+.hero{padding:28px 18px;border:1px solid #5c4527;border-radius:16px;background:radial-gradient(ellipse at top,#342719,#111 75%);text-align:center}
+.hero .reel{font-size:45px}
+.hero h1{color:var(--gold);font-size:22px;letter-spacing:2px;margin:10px 0}
+.hero p{font-size:13px;color:#bbb;margin:0}
+.tools{display:flex;gap:9px;margin:18px 0;flex-wrap:wrap}
+input,textarea,select{width:100%;background:#101010;color:white;border:1px solid #594326;border-radius:9px;padding:12px;font-size:14px;outline:none}
+#search{flex:1;min-width:180px}
+button,.btn{border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer;text-decoration:none;text-align:center}
+.gold{background:linear-gradient(110deg,#8b642d,#e4bd75);color:#111}
+.outline{background:#171717;border:1px solid #74572f;color:var(--gold)}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:25px 0 13px}
+.section-head h2{font-size:17px;letter-spacing:2px;color:var(--gold);margin:0}
+#categories{display:flex;gap:8px;overflow:auto;padding-bottom:5px}
+.cat{white-space:nowrap;background:#151515;border:1px solid #44351f;color:#c8b18a;padding:9px 13px;border-radius:30px;font-size:12px}
+.cat.active{background:#d8ad62;color:#111;border-color:#d8ad62}
+#movies{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid #33291d;border-radius:12px;overflow:hidden;min-width:0}
+.poster{width:100%;aspect-ratio:2/3;object-fit:cover;background:linear-gradient(135deg,#352817,#101010);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:42px}
+.cardbody{padding:10px}
+.title{font-size:13px;font-weight:bold;line-height:1.4}
+.meta{color:#999;font-size:11px;margin-top:5px}
+.card-actions{display:flex;gap:6px;margin-top:10px}
+.card-actions a,.card-actions button{flex:1;font-size:10px;padding:10px 5px}
+#admin{display:none;margin-top:20px;padding:15px;background:#15120e;border:1px solid #74572f;border-radius:13px}
+#admin h3{margin:0 0 12px;color:var(--gold);letter-spacing:2px}
+#movieForm{display:grid;gap:9px}
+.formrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#detail{display:none;position:fixed;inset:0;background:#000e;z-index:10;overflow:auto;padding:25px 15px}
+.detailbox{max-width:500px;margin:25px auto;background:#141414;border:1px solid #74572f;border-radius:15px;padding:17px}
+.detailbox img{width:100%;max-height:350px;object-fit:contain;border-radius:10px;background:#080808}
+.detailbox h2{color:var(--gold)}
+.detailbox p{color:#bbb;line-height:1.6;font-size:14px}
+.empty{grid-column:1/-1;text-align:center;padding:35px 10px;color:#888;border:1px dashed #594326;border-radius:12px}
+footer{text-align:center;color:#666;font-size:10px;padding:25px}
+@media(min-width:650px){#movies{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{padding:42px}}
 </style>
 </head>
-
 <body>
-<div class="container">
 
-<h1>CHILDHOOD MEMORIES</h1>
-<div class="subtitle">VIP PREMIUM</div>
+<header>
+<div class="brand">VYNX CINEMA</div>
+<div class="sub">MOVIES • SERIES • MEMORIES</div>
+</header>
 
-<div class="poster">🎞️</div>
+<main>
+<section class="hero">
+<div class="reel">🎬</div>
+<h1>RELIVE YOUR MEMORIES</h1>
+<p>Your favourite movies and series in one place.</p>
+</section>
 
-<div class="coming">
-<h2>COMING SOON</h2>
-<p>PREMIUM CONTENT IS COMING SOON</p>
+<div class="tools">
+<input id="search" placeholder="Search movies and series...">
+<button class="outline" id="adminToggle" style="display:none">＋ ADD MOVIE</button>
 </div>
 
-<a class="button vip" id="vip" href="#">
-♛ VIP JOIN
-</a>
+<div class="section-head"><h2>EXPLORE</h2></div>
+<div id="categories"></div>
 
-<a class="button more" id="more" href="#">
-▦ MORE
-</a>
-
+<div class="section-head">
+<h2 id="listTitle">LATEST MOVIES</h2>
+<span id="count" class="meta"></span>
 </div>
+<div id="movies"></div>
+
+<section id="admin">
+<h3>♛ FOUNDER CONTROL</h3>
+<form id="movieForm">
+<input id="movieTitle" placeholder="Movie title" required>
+<div class="formrow">
+<input id="movieYear" placeholder="Year">
+<select id="movieCategory">
+<option>Movies</option>
+<option>Series</option>
+<option>Cartoons</option>
+<option>K-Drama</option>
+<option>Action</option>
+</select>
+</div>
+<input id="moviePoster" type="url" placeholder="Poster image URL">
+<textarea id="movieDescription" placeholder="Movie description" rows="3"></textarea>
+<input id="movieId" inputmode="numeric" placeholder="Storage channel Video Message ID" required>
+<div class="formrow">
+<button class="gold" id="saveMovie" type="submit">PUBLISH MOVIE</button>
+<button class="outline" id="cancelEdit" type="button" style="display:none">CANCEL</button>
+</div>
+</form>
+<p class="meta">Test version: movies are saved in this browser only.</p>
+</section>
+</main>
+
+<div id="detail">
+<div class="detailbox">
+<button class="outline" id="closeDetail">✕ CLOSE</button>
+<div id="detailContent"></div>
+</div>
+</div>
+
+<footer>VYNX CINEMA • OFFICIAL</footer>
 
 <script>
-// ကိုယ်ကြိုက်တဲ့ Link တွေ ဒီမှာပြောင်းပါ
-const VIP_LINK = "https://t.me/";
-const MORE_LINK = "https://t.me/";
+const ADMIN_ID="8026955845";
+const BOT="VynxCinema_Bot";
+const KEY="vynx_cinema_movies_v2";
 
-document.getElementById("vip").href = VIP_LINK;
-document.getElementById("more").href = MORE_LINK;
+const tg=window.Telegram&&window.Telegram.WebApp;
+if(tg){tg.ready();tg.expand();}
+
+const userId=String(tg?.initDataUnsafe?.user?.id||"");
+const isAdmin=userId===ADMIN_ID;
+
+const $=id=>document.getElementById(id);
+
+if(isAdmin){
+ $("adminToggle").style.display="inline-block";
+}
+
+let category="All";
+let editing=null;
+
+const categories=["All","Movies","Series","Cartoons","K-Drama","Action"];
+
+function read(){
+ try{return JSON.parse(localStorage.getItem(KEY)||"[]")}
+ catch(e){return []}
+}
+
+function write(items){
+ localStorage.setItem(KEY,JSON.stringify(items));
+}
+
+function botLink(id){
+ return "https://t.me/"+BOT+"?start=video_"+encodeURIComponent(id);
+}
+
+function renderCats(){
+ $("categories").innerHTML="";
+ categories.forEach(c=>{
+  const b=document.createElement("button");
+  b.className="cat"+(category===c?" active":"");
+  b.textContent=c;
+  b.onclick=()=>{category=c;render()};
+  $("categories").append(b);
+ });
+}
+
+function render(){
+ renderCats();
+
+ const q=$("search").value.toLowerCase().trim();
+
+ const items=read().filter(m=>
+  (category==="All"||m.category===category)&&
+  ((m.title||"").toLowerCase().includes(q)||
+   (m.description||"").toLowerCase().includes(q))
+ );
+
+ $("count").textContent=items.length+" TITLES";
+ $("listTitle").textContent=category==="All"?"LATEST MOVIES":category.toUpperCase();
+ $("movies").innerHTML="";
+
+ if(!items.length){
+  $("movies").innerHTML='<div class="empty">No movies added yet.</div>';
+  return;
+ }
+
+ items.forEach(m=>{
+  const card=document.createElement("article");
+  card.className="card";
+
+  if(m.poster){
+   const img=document.createElement("img");
+   img.className="poster";
+   img.src=m.poster;
+   img.alt=m.title;
+   img.onerror=()=>{
+    const f=document.createElement("div");
+    f.className="poster";
+    f.textContent="🎬";
+    img.replaceWith(f);
+   };
+   card.append(img);
+  }else{
+   const f=document.createElement("div");
+   f.className="poster";
+   f.textContent="🎬";
+   card.append(f);
+  }
+
+  const body=document.createElement("div");
+  body.className="cardbody";
+
+  const title=document.createElement("div");
+  title.className="title";
+  title.textContent=m.title+(m.year?" ("+m.year+")":"");
+
+  const meta=document.createElement("div");
+  meta.className="meta";
+  meta.textContent=m.category||"Movies";
+
+  const actions=document.createElement("div");
+  actions.className="card-actions";
+
+  const more=document.createElement("button");
+  more.className="outline";
+  more.textContent="DETAILS";
+  more.onclick=()=>showDetail(m);
+
+  const watch=document.createElement("a");
+  watch.className="gold";
+  watch.textContent="WATCH NOW";
+  watch.href=botLink(m.videoId);
+  watch.target="_blank";
+  watch.rel="noopener";
+
+  actions.append(more,watch);
+  body.append(title,meta,actions);
+
+  if(isAdmin){
+   const edit=document.createElement("button");
+   edit.className="outline";
+   edit.textContent="EDIT";
+   edit.style.marginTop="7px";
+   edit.style.width="100%";
+   edit.onclick=()=>editMovie(m.id);
+
+   const del=document.createElement("button");
+   del.className="outline";
+   del.textContent="DELETE";
+   del.style.marginTop="6px";
+   del.style.width="100%";
+   del.onclick=()=>{
+    if(confirm("Delete this movie?")){
+     write(read().filter(x=>x.id!==m.id));
+     render();
+    }
+   };
+
+   body.append(edit,del);
+  }
+
+  card.append(body);
+  $("movies").append(card);
+ });
+}
+
+function showDetail(m){
+ $("detailContent").innerHTML="";
+
+ if(m.poster){
+  const img=document.createElement("img");
+  img.src=m.poster;
+  img.alt=m.title;
+  $("detailContent").append(img);
+ }
+
+ const h=document.createElement("h2");
+ h.textContent=m.title+(m.year?" ("+m.year+")":"");
+
+ const p=document.createElement("p");
+ p.textContent=m.description||"No description available.";
+
+ const a=document.createElement("a");
+ a.className="btn gold";
+ a.style.display="block";
+ a.href=botLink(m.videoId);
+ a.target="_blank";
+ a.rel="noopener";
+ a.textContent="▶ WATCH NOW ON TELEGRAM BOT";
+
+ $("detailContent").append(h,p,a);
+ $("detail").style.display="block";
+}
+
+function reset(){
+ $("movieForm").reset();
+ editing=null;
+ $("saveMovie").textContent="PUBLISH MOVIE";
+ $("cancelEdit").style.display="none";
+}
+
+function editMovie(id){
+ const m=read().find(x=>x.id===id);
+ if(!m)return;
+
+ editing=id;
+ $("movieTitle").value=m.title;
+ $("movieYear").value=m.year||"";
+ $("movieCategory").value=m.category||"Movies";
+ $("moviePoster").value=m.poster||"";
+ $("movieDescription").value=m.description||"";
+ $("movieId").value=m.videoId;
+
+ $("saveMovie").textContent="SAVE CHANGES";
+ $("cancelEdit").style.display="block";
+ $("admin").scrollIntoView({behavior:"smooth"});
+}
+
+$("adminToggle").onclick=()=>{
+ $("admin").style.display=
+  $("admin").style.display==="block"?"none":"block";
+ $("admin").scrollIntoView({behavior:"smooth"});
+};
+
+$("movieForm").onsubmit=e=>{
+ e.preventDefault();
+ if(!isAdmin)return;
+
+ const m={
+  id:editing||String(Date.now()),
+  title:$("movieTitle").value.trim(),
+  year:$("movieYear").value.trim(),
+  category:$("movieCategory").value,
+  poster:$("moviePoster").value.trim(),
+  description:$("movieDescription").value.trim(),
+  videoId:$("movieId").value.trim()
+ };
+
+ if(!m.title||!/^[0-9]+$/.test(m.videoId)){
+  alert("Enter a movie title and numeric Video Message ID.");
+  return;
+ }
+
+ if(m.poster&&!/^https?:\/\//i.test(m.poster)){
+  alert("Enter a valid poster URL.");
+  return;
+ }
+
+ const all=read();
+ const i=all.findIndex(x=>x.id===editing);
+
+ if(i>=0)all[i]=m;
+ else all.unshift(m);
+
+ write(all);
+ reset();
+ render();
+ alert("Movie saved on this device.");
+};
+
+$("cancelEdit").onclick=reset;
+$("closeDetail").onclick=()=>$("detail").style.display="none";
+$("detail").onclick=e=>{
+ if(e.target===$("detail"))$("detail").style.display="none";
+};
+$("search").oninput=render;
+
+render();
 </script>
-
 </body>
 </html>
