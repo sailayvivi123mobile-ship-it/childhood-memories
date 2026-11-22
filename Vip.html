@@ -5,116 +5,321 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#090909">
-<title>CHILDHOOD MEMORIES VIP</title>
+<title>VYNX CINEMA</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;
+ margin:0;padding:20px 15px 40px;
  min-height:100vh;
  background:radial-gradient(ellipse at top,#302316,#090909 70%);
- color:white;
- font-family:Arial,sans-serif;
- display:flex;
- justify-content:center;
- align-items:center;
- padding:25px;
+ color:white;font-family:Arial,sans-serif;
 }
-.container{
- width:100%;
- max-width:430px;
+.container{max-width:750px;margin:auto}
+header{text-align:center;padding:20px 0}
+h1{color:#e5bd70;letter-spacing:3px;font-size:29px}
+.subtitle{color:#b9a47c;letter-spacing:5px;font-size:10px}
+.hero{
+ text-align:center;padding:25px 15px;
+ background:linear-gradient(135deg,#392b19,#101010);
+ border:1px solid #806332;border-radius:16px;
+ margin:20px 0;
+}
+.hero .icon{font-size:48px}
+.hero h2{color:#e5bd70;letter-spacing:2px}
+.hero p{color:#aaa;font-size:13px}
+input,textarea{
+ width:100%;padding:13px;margin:5px 0;
+ background:#111;color:white;
+ border:1px solid #70552d;border-radius:9px;
+ font-size:14px;
+}
+textarea{min-height:80px}
+button,.button{
+ padding:13px;border:0;border-radius:9px;
+ font-weight:bold;cursor:pointer;text-decoration:none;
  text-align:center;
 }
-h1{
- color:#e5bd70;
- font-size:27px;
- letter-spacing:2px;
+.gold{background:linear-gradient(110deg,#98713a,#e5bd70);color:#111}
+.dark{background:#191919;color:#e5bd70;border:1px solid #806332}
+#adminPanel{
+ display:none;background:#17130e;
+ border:1px solid #70552d;border-radius:14px;
+ padding:15px;margin:20px 0;
 }
-.subtitle{
- color:#b9a47c;
- letter-spacing:5px;
- font-size:11px;
- margin-bottom:30px;
+#adminPanel h3{color:#e5bd70}
+.form-buttons{display:flex;gap:8px}
+.form-buttons button{flex:1}
+.search{margin:20px 0}
+.section-title{color:#e5bd70;letter-spacing:2px;margin:25px 0 15px}
+#movieList{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
+ gap:13px;
+}
+.movie{
+ background:#151515;border:1px solid #44351f;
+ border-radius:12px;overflow:hidden;
 }
 .poster{
- height:170px;
- border:1px solid #806332;
- border-radius:16px;
- display:flex;
- justify-content:center;
- align-items:center;
- font-size:75px;
- background:linear-gradient(135deg,#392b19,#101010);
- margin-bottom:25px;
+ width:100%;aspect-ratio:2/3;object-fit:cover;
+ background:#241b10;display:flex;
+ align-items:center;justify-content:center;
+ color:#e5bd70;font-size:40px;
 }
-.coming{
- padding:22px;
- background:#17130e;
- border:1px solid #70552d;
- border-radius:13px;
- margin-bottom:15px;
+.movie-info{padding:11px}
+.movie-title{font-weight:bold;font-size:14px}
+.description{font-size:12px;color:#aaa;margin:8px 0;line-height:1.5}
+.watch{
+ display:block;margin-top:10px;
+ background:linear-gradient(110deg,#98713a,#e5bd70);
+ color:#111;padding:11px;border-radius:8px;
+ text-align:center;text-decoration:none;
+ font-weight:bold;font-size:12px;
 }
-.coming h2{
- color:#e5bd70;
- letter-spacing:3px;
- font-size:19px;
+.admin-buttons{display:flex;gap:6px;margin-top:8px}
+.admin-buttons button{flex:1;font-size:11px}
+.empty{
+ grid-column:1/-1;text-align:center;
+ padding:25px;color:#888;
+ border:1px dashed #70552d;border-radius:12px;
 }
-.coming p{
- color:#aaa;
- font-size:12px;
-}
-.button{
- display:block;
- padding:19px;
- margin:13px 0;
- border-radius:13px;
- text-decoration:none;
- font-weight:bold;
- letter-spacing:2px;
-}
-.vip{
- background:linear-gradient(110deg,#8c672e,#e5bd70);
- color:#111;
-}
-.more{
- background:#191919;
- color:#e5bd70;
- border:1px solid #806332;
-}
+footer{text-align:center;color:#777;font-size:10px;margin-top:30px}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<h1>CHILDHOOD MEMORIES</h1>
-<div class="subtitle">VIP PREMIUM</div>
+<header>
+<h1>VYNX CINEMA</h1>
+<div class="subtitle">MOVIES • SERIES • MEMORIES</div>
+</header>
 
-<div class="poster">🎞️</div>
-
-<div class="coming">
-<h2>COMING SOON</h2>
-<p>PREMIUM CONTENT IS COMING SOON</p>
+<div class="hero">
+<div class="icon">🎞️</div>
+<h2>WELCOME TO VYNX CINEMA</h2>
+<p>Your favourite movies and series in one place.</p>
 </div>
 
-<a class="button vip" id="vip" href="#">
-♛ VIP JOIN
-</a>
+<div id="adminPanel">
+<h3>♛ FOUNDER CONTROL</h3>
 
-<a class="button more" id="more" href="#">
-▦ MORE
-</a>
+<form id="movieForm">
+<input id="title" placeholder="Movie Title" required>
+<input id="year" placeholder="Release Year (Optional)">
+<input id="poster" type="url" placeholder="Poster Image URL">
+<textarea id="description" placeholder="Movie Description"></textarea>
+<input id="videoId" inputmode="numeric" placeholder="Storage Video Message ID" required>
 
+<div class="form-buttons">
+<button class="gold" type="submit" id="saveBtn">PUBLISH MOVIE</button>
+<button class="dark" type="button" id="cancelBtn" style="display:none">CANCEL</button>
+</div>
+</form>
+
+<p style="font-size:11px;color:#aaa">
+Test version: Movies are saved on this device only.
+</p>
+</div>
+
+<input class="search" id="search" placeholder="Search Movies...">
+
+<div class="section-title">LATEST MOVIES</div>
+<div id="movieList"></div>
+
+<footer>VYNX CINEMA • OFFICIAL</footer>
 </div>
 
 <script>
-// ကိုယ်ကြိုက်တဲ့ Link တွေ ဒီမှာပြောင်းပါ
-const VIP_LINK = "https://t.me/";
-const MORE_LINK = "https://t.me/";
+const ADMIN_ID = "8026955845";
+const BOT_USERNAME = "VynxCinema_Bot";
+const STORAGE_KEY = "vynx_movies_test";
 
-document.getElementById("vip").href = VIP_LINK;
-document.getElementById("more").href = MORE_LINK;
+const tg = window.Telegram?.WebApp;
+
+if(tg){
+ tg.ready();
+ tg.expand();
+}
+
+const userId = String(tg?.initDataUnsafe?.user?.id || "");
+const isAdmin = userId === ADMIN_ID;
+
+if(isAdmin){
+ document.getElementById("adminPanel").style.display = "block";
+}
+
+const form = document.getElementById("movieForm");
+const list = document.getElementById("movieList");
+const search = document.getElementById("search");
+
+let editingId = null;
+
+function getMovies(){
+ try{
+  return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+ }catch(e){
+  return [];
+ }
+}
+
+function saveMovies(movies){
+ localStorage.setItem(STORAGE_KEY,JSON.stringify(movies));
+}
+
+function renderMovies(){
+ const query = search.value.toLowerCase().trim();
+
+ const movies = getMovies().filter(movie =>
+  movie.title.toLowerCase().includes(query)
+ );
+
+ list.innerHTML = "";
+
+ if(movies.length === 0){
+  list.innerHTML = '<div class="empty">No movies available yet.</div>';
+  return;
+ }
+
+ movies.forEach(movie=>{
+  const card = document.createElement("div");
+  card.className = "movie";
+
+  const poster = document.createElement("img");
+  poster.className = "poster";
+  poster.alt = movie.title;
+
+  if(movie.poster){
+   poster.src = movie.poster;
+   poster.onerror = ()=>poster.replaceWith(createFallback());
+  }else{
+   poster.replaceWith(createFallback());
+  }
+
+  const info = document.createElement("div");
+  info.className = "movie-info";
+
+  const title = document.createElement("div");
+  title.className = "movie-title";
+  title.textContent = movie.title + (movie.year ? " ("+movie.year+")" : "");
+
+  const description = document.createElement("div");
+  description.className = "description";
+  description.textContent = movie.description || "";
+
+  const watch = document.createElement("a");
+  watch.className = "watch";
+  watch.textContent = "▶ WATCH NOW";
+  watch.href = "https://t.me/"+BOT_USERNAME+"?start=video_"+encodeURIComponent(movie.videoId);
+  watch.target = "_blank";
+  watch.rel = "noopener";
+
+  info.append(title,description,watch);
+
+  if(isAdmin){
+   const actions = document.createElement("div");
+   actions.className = "admin-buttons";
+
+   const edit = document.createElement("button");
+   edit.className = "dark";
+   edit.textContent = "EDIT";
+   edit.onclick = ()=>editMovie(movie.id);
+
+   const del = document.createElement("button");
+   del.className = "dark";
+   del.textContent = "DELETE";
+   del.onclick = ()=>{
+    if(confirm("Delete this movie?")){
+     saveMovies(getMovies().filter(m=>m.id!==movie.id));
+     renderMovies();
+    }
+   };
+
+   actions.append(edit,del);
+   info.append(actions);
+  }
+
+  card.append(poster,info);
+  list.append(card);
+ });
+}
+
+function createFallback(){
+ const div = document.createElement("div");
+ div.className = "poster";
+ div.textContent = "🎬";
+ return div;
+}
+
+form.addEventListener("submit",function(e){
+ e.preventDefault();
+
+ if(!isAdmin)return;
+
+ const movie = {
+  id: editingId || String(Date.now()),
+  title: document.getElementById("title").value.trim(),
+  year: document.getElementById("year").value.trim(),
+  poster: document.getElementById("poster").value.trim(),
+  description: document.getElementById("description").value.trim(),
+  videoId: document.getElementById("videoId").value.trim()
+ };
+
+ if(!movie.title || !/^\d+$/.test(movie.videoId)){
+  alert("Please enter a title and numeric Video Message ID.");
+  return;
+ }
+
+ if(movie.poster && !/^https?:\/\//i.test(movie.poster)){
+  alert("Please enter a valid poster URL.");
+  return;
+ }
+
+ const movies = getMovies();
+ const index = movies.findIndex(m=>m.id===editingId);
+
+ if(index>=0){
+  movies[index] = movie;
+ }else{
+  movies.unshift(movie);
+ }
+
+ saveMovies(movies);
+ resetForm();
+ renderMovies();
+});
+
+function editMovie(id){
+ const movie = getMovies().find(m=>m.id===id);
+ if(!movie)return;
+
+ editingId = id;
+
+ document.getElementById("title").value = movie.title;
+ document.getElementById("year").value = movie.year;
+ document.getElementById("poster").value = movie.poster;
+ document.getElementById("description").value = movie.description;
+ document.getElementById("videoId").value = movie.videoId;
+
+ document.getElementById("saveBtn").textContent = "SAVE CHANGES";
+ document.getElementById("cancelBtn").style.display = "block";
+
+ document.getElementById("adminPanel").scrollIntoView({behavior:"smooth"});
+}
+
+function resetForm(){
+ form.reset();
+ editingId = null;
+ document.getElementById("saveBtn").textContent = "PUBLISH MOVIE";
+ document.getElementById("cancelBtn").style.display = "none";
+}
+
+document.getElementById("cancelBtn").onclick = resetForm;
+search.addEventListener("input",renderMovies);
+
+renderMovies();
 </script>
-
 </body>
 </html>
